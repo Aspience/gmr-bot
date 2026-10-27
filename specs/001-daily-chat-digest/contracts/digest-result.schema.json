@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gmr-bot.local/contracts/digest-result.schema.json",
+  "title": "Digest extraction result",
+  "description": "Plaintext body inside the encrypted Redis result. work_log is safe to persist. narrative_ru is delivered to Telegram and must not be inserted into PostgreSQL.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["v", "job_id", "chat_id", "minsk_day", "status", "work_log"],
+  "properties": {
+    "v": { "const": 1 },
+    "job_id": { "type": "string", "format": "uuid" },
+    "chat_id": { "type": "string", "pattern": "^-?[0-9]+$" },
+    "minsk_day": { "type": "string", "format": "date" },
+    "status": { "enum": ["ok", "error"] },
+    "error_code": {
+      "type": ["string", "null"],
+      "enum": [
+        null,
+        "model_timeout",
+        "model_unavailable",
+        "model_rejected",
+        "invalid_job",
+        "bad_signature"
+      ]
+    },
+    "narrative_ru": {
+      "type": ["string", "null"],
+      "maxLength": 4000,
+      "description": "Russian person-centered personal news. Null when there are no notable events. Must not include silence counts."
+    },
+    "event_count": { "type": "integer", "minimum": 0 },
+    "context_truncated": {
+      "type": "boolean",
+      "description": "True when eligible messages were dropped because of the retrieval cap or the embedding time limit. The backend then treats the day as partly visible."
+    },
+    "work_log": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action", "success"],
+        "properties": {
+          "action": { "enum": ["extract_events"] },
+          "success": { "type": "boolean" },
+          "error_code": {
+            "type": ["string", "null"],
+            "enum": [
+              null,
+              "model_timeout",
+              "model_unavailable",
+              "model_rejected",
+              "invalid_job",
+              "bad_signature"
+            ]
+          }
+        }
+      }
+    },
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "input_tokens", "output_tokens", "embedded_count", "retrieved_count"],
+      "properties": {
+        "model": { "const": "qwen3.5-4b-q4_k_m" },
+        "input_tokens": { "type": "integer", "minimum": 0 },
+        "output_tokens": { "type": "integer", "minimum": 0 },
+        "embedded_count": { "type": "integer", "minimum": 0 },
+        "retrieved_count": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "ok" } }, "required": ["status"] },
+      "then": {
+        "required": ["narrative_ru", "event_count", "context_truncated", "usage"],
+        "properties": { "error_code": { "type": "null" } }
+      }
+    },
+    {
+      "if": { "properties": { "status": { "const": "error" } }, "required": ["status"] },
+      "then": {
+        "required": ["error_code"],
+        "properties": {
+          "narrative_ru": { "type": "null" },
+          "error_code": { "type": "string" }
+        }
+      }
+    }
+  ]
+}

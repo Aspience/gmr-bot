@@ -1,0 +1,1400 @@
+{
+  "version": 1,
+  "recap_day": "2026-10-26",
+  "bot_user_id": "900",
+  "notes": "Synthetic messages for the daily recap. Not real chat data. recap_day is the Minsk day being described. counted_through null means no earlier fully visible day was applied. retrieved_texts are eligible messages the retriever must return. ignored_texts are eligible messages it must leave out. Forwards, captions, service notices, and the bot are not retrieval inputs.",
+  "cases": [
+    {
+      "id": "family-and-one-silent-day",
+      "title": "A typed family event, plus one member with no earlier silence, yields a recap and a one-day count.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "2",
+          "label": "Ира",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "1",
+          "kind": "text",
+          "text": "У моих друзей родился сын"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 1,
+        "must_mention": [
+          "сын"
+        ],
+        "must_not_mention": [],
+        "silence": [
+          {
+            "user_id": "2",
+            "days": 1,
+            "long": false
+          }
+        ],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "2",
+            "consecutive_silent_days": 1
+          }
+        ],
+        "stub_narrative_ru": "У друзей Миши родился сын.",
+        "retrieved_texts": [
+          "У моих друзей родился сын"
+        ],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "health-only",
+      "title": "A typed health event is recapped.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "3",
+          "label": "Лена",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "3",
+          "kind": "text",
+          "text": "Я легла в больницу с ангиной"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 1,
+        "must_mention": [
+          "больницу"
+        ],
+        "must_not_mention": [],
+        "silence": [],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "3",
+            "consecutive_silent_days": 0
+          }
+        ],
+        "stub_narrative_ru": "Лена легла в больницу.",
+        "retrieved_texts": [
+          "Я легла в больницу с ангиной"
+        ],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "relationship-only",
+      "title": "A typed relationship event names the people involved.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "1",
+          "kind": "text",
+          "text": "Мы с Катей помирились"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 1,
+        "must_mention": [
+          "помирились"
+        ],
+        "must_not_mention": [],
+        "silence": [],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 0
+          }
+        ],
+        "stub_narrative_ru": "Миша и Катя помирились.",
+        "retrieved_texts": [
+          "Мы с Катей помирились"
+        ],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "move-only",
+      "title": "A typed move is recapped.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "4",
+          "label": "Сергей",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "4",
+          "kind": "text",
+          "text": "Я переехал в Гродно"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 1,
+        "must_mention": [
+          "Гродно"
+        ],
+        "must_not_mention": [],
+        "silence": [],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "4",
+            "consecutive_silent_days": 0
+          }
+        ],
+        "stub_narrative_ru": "Сергей переехал в Гродно.",
+        "retrieved_texts": [
+          "Я переехал в Гродно"
+        ],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "job-only",
+      "title": "A typed job change is recapped.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "5",
+          "label": "Оля",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "5",
+          "kind": "text",
+          "text": "Я вышла на новую работу"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 1,
+        "must_mention": [
+          "работу"
+        ],
+        "must_not_mention": [],
+        "silence": [],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "5",
+            "consecutive_silent_days": 0
+          }
+        ],
+        "stub_narrative_ru": "Оля вышла на новую работу.",
+        "retrieved_texts": [
+          "Я вышла на новую работу"
+        ],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "achievement-only",
+      "title": "A typed achievement is recapped.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "6",
+          "label": "Паша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "6",
+          "kind": "text",
+          "text": "Я защитил диплом"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 1,
+        "must_mention": [
+          "диплом"
+        ],
+        "must_not_mention": [],
+        "silence": [],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "6",
+            "consecutive_silent_days": 0
+          }
+        ],
+        "stub_narrative_ru": "Паша защитил диплом.",
+        "retrieved_texts": [
+          "Я защитил диплом"
+        ],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "plans-jokes-greetings-no-recap",
+      "title": "Plans, a joke, and a greeting, with everyone having typed, publish nothing.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "2",
+          "label": "Ира",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "1",
+          "kind": "text",
+          "text": "Завтра едем на дачу"
+        },
+        {
+          "author_user_id": "2",
+          "kind": "text",
+          "text": "ахах хорошая шутка"
+        },
+        {
+          "author_user_id": "2",
+          "kind": "text",
+          "text": "доброе утро"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "nothing",
+        "distinct_events": 0,
+        "must_mention": [],
+        "must_not_mention": [
+          "дачу",
+          "шутка"
+        ],
+        "silence": [],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "2",
+            "consecutive_silent_days": 0
+          }
+        ],
+        "stub_narrative_ru": null,
+        "retrieved_texts": [],
+        "ignored_texts": [
+          "Завтра едем на дачу",
+          "ахах хорошая шутка",
+          "доброе утро"
+        ]
+      }
+    },
+    {
+      "id": "small-talk-and-first-silent-day",
+      "title": "Small talk plus a first silent day names that member and does not call the silence long.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "2",
+          "label": "Ира",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "1",
+          "kind": "text",
+          "text": "как дела"
+        },
+        {
+          "author_user_id": "1",
+          "kind": "text",
+          "text": "лол"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 0,
+        "must_mention": [],
+        "must_not_mention": [
+          "родился"
+        ],
+        "silence": [
+          {
+            "user_id": "2",
+            "days": 1,
+            "long": false
+          }
+        ],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "2",
+            "consecutive_silent_days": 1
+          }
+        ],
+        "stub_narrative_ru": null,
+        "retrieved_texts": [],
+        "ignored_texts": [
+          "как дела",
+          "лол"
+        ]
+      }
+    },
+    {
+      "id": "second-silent-day-is-long",
+      "title": "The second fully visible silent day states 2 and says the silence has been long. No model call.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "2",
+          "label": "Ира",
+          "consecutive_silent_days_before": 1,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [],
+      "expect": {
+        "enqueue_model": false,
+        "publish": "recap",
+        "distinct_events": 0,
+        "must_mention": [],
+        "must_not_mention": [],
+        "silence": [
+          {
+            "user_id": "2",
+            "days": 2,
+            "long": true
+          }
+        ],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "2",
+            "consecutive_silent_days": 2
+          }
+        ],
+        "stub_narrative_ru": null,
+        "retrieved_texts": [],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "fifth-silent-day-plural",
+      "title": "A fifth silent day uses the Russian plural for five and the long-silence sentence.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "2",
+          "label": "Ира",
+          "consecutive_silent_days_before": 4,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [],
+      "expect": {
+        "enqueue_model": false,
+        "publish": "recap",
+        "distinct_events": 0,
+        "must_mention": [],
+        "must_not_mention": [],
+        "silence": [
+          {
+            "user_id": "2",
+            "days": 5,
+            "long": true
+          }
+        ],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "2",
+            "consecutive_silent_days": 5
+          }
+        ],
+        "stub_narrative_ru": null,
+        "retrieved_texts": [],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "forward-and-caption-do-not-count-as-typed",
+      "title": "A forward and a media caption are left out and do not count as typing. A greeting does.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "2",
+          "label": "Ира",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "3",
+          "label": "Лена",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "1",
+          "kind": "forward",
+          "text": "У друзей родился сын"
+        },
+        {
+          "author_user_id": "3",
+          "kind": "caption",
+          "text": "Оля выиграла конкурс"
+        },
+        {
+          "author_user_id": "2",
+          "kind": "text",
+          "text": "доброе утро"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 0,
+        "must_mention": [],
+        "must_not_mention": [
+          "сын",
+          "конкурс"
+        ],
+        "silence": [
+          {
+            "user_id": "3",
+            "days": 1,
+            "long": false
+          },
+          {
+            "user_id": "1",
+            "days": 1,
+            "long": false
+          }
+        ],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 1
+          },
+          {
+            "user_id": "2",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "3",
+            "consecutive_silent_days": 1
+          }
+        ],
+        "stub_narrative_ru": null,
+        "retrieved_texts": [],
+        "ignored_texts": [
+          "доброе утро"
+        ]
+      }
+    },
+    {
+      "id": "reply-kept-duplicate-forward-once",
+      "title": "The same fact in a reply is kept once. The forward of that fact is dropped and its author is silent.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "3",
+          "label": "Лена",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "1",
+          "kind": "reply",
+          "text": "У друзей родился сын"
+        },
+        {
+          "author_user_id": "3",
+          "kind": "forward",
+          "text": "У друзей родился сын"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 1,
+        "must_mention": [
+          "сын"
+        ],
+        "must_not_mention": [],
+        "silence": [
+          {
+            "user_id": "3",
+            "days": 1,
+            "long": false
+          }
+        ],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "3",
+            "consecutive_silent_days": 1
+          }
+        ],
+        "stub_narrative_ru": "У друзей Миши родился сын.",
+        "retrieved_texts": [
+          "У друзей родился сын"
+        ],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "same-event-typed-three-times",
+      "title": "One event typed three times is told once.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "2",
+          "label": "Ира",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "1",
+          "kind": "text",
+          "text": "У друзей родился сын"
+        },
+        {
+          "author_user_id": "1",
+          "kind": "text",
+          "text": "У друзей родился сын"
+        },
+        {
+          "author_user_id": "1",
+          "kind": "reply",
+          "text": "У друзей родился сын"
+        },
+        {
+          "author_user_id": "2",
+          "kind": "text",
+          "text": "ага"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 1,
+        "must_mention": [
+          "сын"
+        ],
+        "must_not_mention": [],
+        "silence": [],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "2",
+            "consecutive_silent_days": 0
+          }
+        ],
+        "stub_narrative_ru": "У друзей Миши родился сын.",
+        "retrieved_texts": [
+          "У друзей родился сын"
+        ],
+        "ignored_texts": [
+          "ага"
+        ]
+      }
+    },
+    {
+      "id": "five-people-grouped",
+      "title": "Family, health, a move, a job, and an achievement in one day, each told with the person involved.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "3",
+          "label": "Лена",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "4",
+          "label": "Сергей",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "5",
+          "label": "Оля",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "6",
+          "label": "Паша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "1",
+          "kind": "text",
+          "text": "У моих друзей родился сын"
+        },
+        {
+          "author_user_id": "3",
+          "kind": "text",
+          "text": "Я легла в больницу"
+        },
+        {
+          "author_user_id": "4",
+          "kind": "reply",
+          "text": "Я переехал в Гродно"
+        },
+        {
+          "author_user_id": "5",
+          "kind": "text",
+          "text": "Я вышла на новую работу"
+        },
+        {
+          "author_user_id": "6",
+          "kind": "text",
+          "text": "Я защитил диплом"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 5,
+        "must_mention": [
+          "сын",
+          "больницу",
+          "Гродно",
+          "работу",
+          "диплом"
+        ],
+        "must_not_mention": [],
+        "silence": [],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "3",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "4",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "5",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "6",
+            "consecutive_silent_days": 0
+          }
+        ],
+        "stub_narrative_ru": "У друзей Миши родился сын. Лена легла в больницу. Сергей переехал в Гродно. Оля вышла на новую работу. Паша защитил диплом.",
+        "retrieved_texts": [
+          "У моих друзей родился сын",
+          "Я легла в больницу",
+          "Я переехал в Гродно",
+          "Я вышла на новую работу",
+          "Я защитил диплом"
+        ],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "partial-day-does-not-change-counts",
+      "title": "A partly visible day keeps existing counts, names a quiet member without a count, and says the rest was not visible.",
+      "fully_visible": false,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 2,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "2",
+          "label": "Ира",
+          "consecutive_silent_days_before": 4,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "1",
+          "kind": "text",
+          "text": "У моих друзей родился сын"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 1,
+        "must_mention": [
+          "сын"
+        ],
+        "must_not_mention": [
+          "давно"
+        ],
+        "silence": [],
+        "visible_without_count": [
+          "2"
+        ],
+        "partial_notice": true,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 2
+          },
+          {
+            "user_id": "2",
+            "consecutive_silent_days": 4
+          }
+        ],
+        "stub_narrative_ru": "У друзей Миши родился сын.",
+        "retrieved_texts": [
+          "У моих друзей родился сын"
+        ],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "unreadable-day-is-failure",
+      "title": "A day that could not be read posts the failure note and does not change counts or name anyone silent.",
+      "fully_visible": false,
+      "readable": false,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 2,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [],
+      "expect": {
+        "enqueue_model": false,
+        "publish": "failure",
+        "distinct_events": 0,
+        "must_mention": [],
+        "must_not_mention": [
+          "Миша"
+        ],
+        "silence": [],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 2
+          }
+        ],
+        "stub_narrative_ru": null,
+        "retrieved_texts": [],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "service-notice-plus-real-event",
+      "title": "A join notice is not personal news. A typed job event beside it is.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": null,
+          "kind": "service",
+          "text": "Коля вступил в чат"
+        },
+        {
+          "author_user_id": "1",
+          "kind": "text",
+          "text": "Оля вышла на новую работу"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 1,
+        "must_mention": [
+          "работу"
+        ],
+        "must_not_mention": [
+          "вступил"
+        ],
+        "silence": [],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 0
+          }
+        ],
+        "stub_narrative_ru": "Оля вышла на новую работу.",
+        "retrieved_texts": [
+          "Оля вышла на новую работу"
+        ],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "typing-resets-a-long-run",
+      "title": "Eligible text resets a long silence. Another member's second silent day is reported as long.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 5,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "2",
+          "label": "Ира",
+          "consecutive_silent_days_before": 1,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "1",
+          "kind": "text",
+          "text": "Я защитил диплом"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 1,
+        "must_mention": [
+          "диплом"
+        ],
+        "must_not_mention": [],
+        "silence": [
+          {
+            "user_id": "2",
+            "days": 2,
+            "long": true
+          }
+        ],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "2",
+            "consecutive_silent_days": 2
+          }
+        ],
+        "stub_narrative_ru": "Миша защитил диплом.",
+        "retrieved_texts": [
+          "Я защитил диплом"
+        ],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "no-earlier-mark-starts-at-one",
+      "title": "With no earlier mark, the first fully visible silent day is 1 and is not called long.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": null
+        },
+        {
+          "user_id": "2",
+          "label": "Ира",
+          "consecutive_silent_days_before": 0,
+          "counted_through": null
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "1",
+          "kind": "text",
+          "text": "привет"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 0,
+        "must_mention": [],
+        "must_not_mention": [
+          "родился"
+        ],
+        "silence": [
+          {
+            "user_id": "2",
+            "days": 1,
+            "long": false
+          }
+        ],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "2",
+            "consecutive_silent_days": 1
+          }
+        ],
+        "stub_narrative_ru": null,
+        "retrieved_texts": [],
+        "ignored_texts": [
+          "привет"
+        ]
+      }
+    },
+    {
+      "id": "news-plus-long-silence",
+      "title": "A personal event and a long silence are both in the same recap.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "2",
+          "label": "Ира",
+          "consecutive_silent_days_before": 3,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "1",
+          "kind": "reply",
+          "text": "У моих друзей родился сын"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 1,
+        "must_mention": [
+          "сын"
+        ],
+        "must_not_mention": [],
+        "silence": [
+          {
+            "user_id": "2",
+            "days": 4,
+            "long": true
+          }
+        ],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "2",
+            "consecutive_silent_days": 4
+          }
+        ],
+        "stub_narrative_ru": "У друзей Миши родился сын.",
+        "retrieved_texts": [
+          "У моих друзей родился сын"
+        ],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "retry-does-not-double-count",
+      "title": "A second pass on a day already applied does not increment the stored count.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "2",
+          "label": "Ира",
+          "consecutive_silent_days_before": 2,
+          "counted_through": "2026-10-26"
+        }
+      ],
+      "messages": [],
+      "expect": {
+        "enqueue_model": false,
+        "publish": "recap",
+        "distinct_events": 0,
+        "must_mention": [],
+        "must_not_mention": [],
+        "silence": [
+          {
+            "user_id": "2",
+            "days": 2,
+            "long": true
+          }
+        ],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "2",
+            "consecutive_silent_days": 2
+          }
+        ],
+        "stub_narrative_ru": null,
+        "retrieved_texts": [],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "english-fact-russian-recap",
+      "title": "A job mentioned in English is recapped in Russian.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "1",
+          "kind": "text",
+          "text": "I got a new job at the factory"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 1,
+        "must_mention": [
+          "работу"
+        ],
+        "must_not_mention": [
+          "factory"
+        ],
+        "silence": [],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 0
+          }
+        ],
+        "stub_narrative_ru": "Миша вышел на новую работу.",
+        "retrieved_texts": [
+          "I got a new job at the factory"
+        ],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "bot-message-ignored",
+      "title": "The bot's own message is not news and does not count as a member typing.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "2",
+          "label": "Ира",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "900",
+          "kind": "text",
+          "text": "У бота родился сын"
+        }
+      ],
+      "expect": {
+        "enqueue_model": false,
+        "publish": "recap",
+        "distinct_events": 0,
+        "must_mention": [],
+        "must_not_mention": [
+          "сын"
+        ],
+        "silence": [
+          {
+            "user_id": "2",
+            "days": 1,
+            "long": false
+          }
+        ],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "2",
+            "consecutive_silent_days": 1
+          }
+        ],
+        "stub_narrative_ru": null,
+        "retrieved_texts": [],
+        "ignored_texts": []
+      }
+    },
+    {
+      "id": "mixed-combination",
+      "title": "Reply, plan, forward, greeting, and a second silent day in one day.",
+      "fully_visible": true,
+      "readable": true,
+      "members": [
+        {
+          "user_id": "1",
+          "label": "Миша",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "2",
+          "label": "Ира",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "3",
+          "label": "Лена",
+          "consecutive_silent_days_before": 0,
+          "counted_through": "2026-10-25"
+        },
+        {
+          "user_id": "7",
+          "label": "Коля",
+          "consecutive_silent_days_before": 1,
+          "counted_through": "2026-10-25"
+        }
+      ],
+      "messages": [
+        {
+          "author_user_id": "1",
+          "kind": "reply",
+          "text": "У друзей родился сын"
+        },
+        {
+          "author_user_id": "1",
+          "kind": "text",
+          "text": "Завтра пойдём в кино"
+        },
+        {
+          "author_user_id": "3",
+          "kind": "forward",
+          "text": "Оля выиграла конкурс"
+        },
+        {
+          "author_user_id": "2",
+          "kind": "text",
+          "text": "привет"
+        }
+      ],
+      "expect": {
+        "enqueue_model": true,
+        "publish": "recap",
+        "distinct_events": 1,
+        "must_mention": [
+          "сын"
+        ],
+        "must_not_mention": [
+          "кино",
+          "конкурс"
+        ],
+        "silence": [
+          {
+            "user_id": "7",
+            "days": 2,
+            "long": true
+          },
+          {
+            "user_id": "3",
+            "days": 1,
+            "long": false
+          }
+        ],
+        "visible_without_count": [],
+        "partial_notice": false,
+        "count_after": [
+          {
+            "user_id": "1",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "2",
+            "consecutive_silent_days": 0
+          },
+          {
+            "user_id": "3",
+            "consecutive_silent_days": 1
+          },
+          {
+            "user_id": "7",
+            "consecutive_silent_days": 2
+          }
+        ],
+        "stub_narrative_ru": "У друзей Миши родился сын.",
+        "retrieved_texts": [
+          "У друзей родился сын"
+        ],
+        "ignored_texts": [
+          "Завтра пойдём в кино",
+          "привет"
+        ]
+      }
+    }
+  ]
+}

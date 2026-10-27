@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gmr-bot.local/contracts/digest-job.schema.json",
+  "title": "Digest extraction job",
+  "description": "Plaintext body inside the encrypted Redis job. The backend sends only eligible member text. The AI service must not be given forwards, captions, service notices, or bot messages.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["v", "job_id", "chat_id", "minsk_day", "messages"],
+  "properties": {
+    "v": { "const": 1 },
+    "job_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Stable for one chat, recap day, and attempt. A repeated job id returns the cached result and does not call the model."
+    },
+    "chat_id": {
+      "type": "string",
+      "pattern": "^-?[0-9]+$"
+    },
+    "minsk_day": {
+      "type": "string",
+      "format": "date",
+      "description": "The Minsk calendar day being recapped."
+    },
+    "messages": {
+      "type": "array",
+      "maxItems": 2000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["author_user_id", "author_label", "text"],
+        "properties": {
+          "author_user_id": { "type": "string", "pattern": "^[0-9]+$" },
+          "author_label": { "type": "string", "minLength": 1, "maxLength": 128 },
+          "text": { "type": "string", "minLength": 1, "maxLength": 4096 }
+        }
+      }
+    }
+  }
+}
